@@ -20,13 +20,13 @@ Each service reads its own env file from `config/`. If you change ports, update 
 - `config/intelligence.env`
 - `config/gateway.env`
 
-Local DB password is kept here by design for this server:
-- `postgres` user password: `free_local_2024`
-- All services use `DATABASE_URL=postgresql://postgres:free_local_2024@localhost:5432/freelancer_suite`
+Local DB password is stored in `.env`:
+- `POSTGRES_PASSWORD` in `.env`
+- `DATABASE_URL` in `.env` (example: `postgresql://postgres:<POSTGRES_PASSWORD>@localhost:5432/freelancer_suite`)
 
 ## One-time database setup
 ```bash
-sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'free_local_2024';"
+sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '<POSTGRES_PASSWORD>';"
 sudo -u postgres createdb freelancer_suite
 ```
 

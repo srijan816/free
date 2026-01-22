@@ -29,13 +29,19 @@ cp config/intelligence.env.example config/intelligence.env
 cp config/gateway.env.example config/gateway.env
 ```
 
-2. Create database (local defaults):
+2. Create a root `.env` for shared DB credentials (ignored by git):
 ```bash
-sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'free_local_2024';"
+POSTGRES_PASSWORD=your_password
+DATABASE_URL=postgresql://postgres:your_password@localhost:5432/freelancer_suite
+```
+
+3. Create database:
+```bash
+sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '<POSTGRES_PASSWORD>';"
 sudo -u postgres createdb freelancer_suite
 ```
 
-3. Install dependencies + run migrations:
+4. Install dependencies + run migrations:
 ```bash
 npm install
 npm run migrate:gateway
@@ -66,3 +72,6 @@ npm run start
 - Ledger writes only happen in Gateway/Auth/Ledger.
 - Currency values are integer cents only.
 - JWTs are issued by the gateway; other services validate via `JWT_ACCESS_SECRET`.
+
+## Docs
+- Architecture overview: `docs/ARCHITECTURE.md`
